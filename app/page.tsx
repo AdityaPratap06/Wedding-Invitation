@@ -1,69 +1,186 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import EnvelopeScreen from "@/Component/EnvelopeScreen";
+import { TRANSLATIONS } from "@/Component/translations";
 
-export default function Home() {
+const events = [
+  {
+    time: "10:00 AM",
+    name: "Haldi Ceremony",
+    date: "18 February 2027",
+    description: "A morning filled with marigolds, blessings and laughter.",
+    place: "The Royal Courtyard",
+  },
+  {
+    time: "7:00 PM",
+    name: "Wedding Ceremony",
+    date: "18 February 2027",
+    description: "Join us as we begin our forever, surrounded by family.",
+    place: "The Grand Palace",
+  },
+  {
+    time: "8:00 PM",
+    name: "Reception",
+    date: "19 February 2027",
+    description: "An evening of celebration, music and togetherness.",
+    place: "The Grand Palace",
+  },
+];
+
+const weddingDate = "18 February 2027";
+const mapUrl = "https://www.google.com/maps/search/?api=1&query=Jaipur+Rajasthan";
+
+export default function HomePage() {
+  const [opened, setOpened] = useState(false);
+  const whatsappUrl =
+    "https://wa.me/?text=" +
+    encodeURIComponent(
+      "We are delighted to celebrate Ananya & Aarav's wedding. Please count us in!"
+    );
+  const t = TRANSLATIONS["en"];
+  console.log(opened);
+  if (!opened) {
+    return (
+      <EnvelopeScreen
+        t={t}
+        onOpen={() => setOpened(true)}
+      />
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <main className="invitation">
+      <section className="hero" id="home">
+        <div className="hero-frame">
+          <p className="eyebrow">✦ A CELEBRATION OF LOVE ✦</p>
+          <p className="invitation-label">Together with their families</p>
+
+          <h1 className="couple-names">
+            Ananya
+            <span>&amp;</span>
+            Aarav
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <div className="ornament">❦ ❧ ❦</div>
+
+          <p className="hero-copy">
+            Two hearts, two families,
+            <br />
+            one beautiful beginning.
+          </p>
+
+          <div className="hero-divider" />
+
+          <p className="date-label">SAVE THE DATE</p>
+          <p className="hero-date">{weddingDate}</p>
+          <p className="hero-location">JAIPUR · RAJASTHAN</p>
+
+          <a className="outline-button" href="#celebration">
+            EXPLORE THE INVITATION ↓
+          </a>
+        </div>
+        <span className="corner corner-tl">✧</span>
+        <span className="corner corner-tr">✧</span>
+        <span className="corner corner-bl">✧</span>
+        <span className="corner corner-br">✧</span>
+      </section>
+
+      <section className="welcome section" id="celebration">
+        <p className="eyebrow">WITH LOVE AND BLESSINGS</p>
+        <h2>A new chapter begins</h2>
+        <div className="ornament">❦</div>
+        <p className="body-copy">
+          With the blessings of our families, we invite you to be part of
+          a celebration that brings two hearts and two families together.
+          Your presence will make our special days even more meaningful.
+        </p>
+        <p className="signature">Ananya &amp; Aarav</p>
+      </section>
+
+      <section className="events-section section" id="events">
+        <p className="eyebrow">THE WEDDING FESTIVITIES</p>
+        <h2>Days to remember</h2>
+        <p className="muted-copy">
+          Every ceremony, a memory. Every moment, a blessing.
+        </p>
+
+        <div className="event-grid">
+          {events.map((event, index) => (
+            <article className="event-card" key={event.name}>
+              <span className="event-number">0{index + 1}</span>
+              <div className="ornament">✧</div>
+              <p className="event-date">{event.date}</p>
+              <h3>{event.name}</h3>
+              <p className="event-description">{event.description}</p>
+              <div className="event-rule" />
+              <p className="event-time">{event.time}</p>
+              <p className="event-place">{event.place}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="venue-section section" id="venue">
+        <p className="eyebrow">CELEBRATE WITH US</p>
+        <h2>Meet us in Jaipur</h2>
+        <p className="body-copy">
+          We look forward to welcoming you for our wedding celebrations
+          in the beautiful city of Jaipur, Rajasthan.
+        </p>
+        <p className="venue-name">The Grand Palace</p>
+        <p className="muted-copy">Jaipur, Rajasthan, India</p>
+        <a
+          className="filled-button"
+          href={mapUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          VIEW LOCATION ↗
+        </a>
+      </section>
+
+      <section className="gallery-section section" id="gallery">
+        <p className="eyebrow">OUR LITTLE WORLD</p>
+        <h2>Moments of forever</h2>
+        <p className="muted-copy">
+          A place for your favourite photographs and memories together.
+        </p>
+        <div className="gallery-grid">
+          <div className="gallery-photo photo-one" role="img" aria-label="Romantic wedding floral detail" />
+          <div className="gallery-photo photo-two" role="img" aria-label="Elegant wedding celebration" />
+          <div className="gallery-photo photo-three" role="img" aria-label="Palace wedding architecture" />
+        </div>
+      </section>
+
+      <section className="rsvp-section section" id="rsvp">
+        <div className="rsvp-frame">
+          <p className="eyebrow">YOUR PRESENCE IS OUR PRESENT</p>
+          <h2>Celebrate our forever</h2>
+          <div className="ornament">❦ ❧ ❦</div>
+          <p className="body-copy">
+            It would mean the world to have you with us as we begin
+            this beautiful journey together.
+          </p>
+          <a
+            className="filled-button"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            RSVP ON WHATSAPP ↗
+          </a>
+          <p className="rsvp-note">
+            With love, gratitude and excitement for the days ahead.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      <footer className="footer">
+        <div className="ornament">❦</div>
+        <p>MADE WITH LOVE</p>
+        <p className="footer-names">Ananya &amp; Aarav</p>
+        <a href="#home">BACK TO TOP ↑</a>
+      </footer>
+    </main>
   );
 }
